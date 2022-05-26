@@ -16,7 +16,17 @@ router.post("/", async (req, res) => {
     text: req.body.text,
     createdAt: new Date(),
   });
-  res.status(201).send();
+  res.status(200).send();
+});
+
+// Edit Posts
+router.put("/:id/edit", async (req, res) => {
+  const posts = await loadPostsCollection();
+  await posts.findOneAndUpdate(
+    { _id: new mongodb.ObjectId(req.params.id) },
+    { $set: { text: req.body.text, createdAt: new Date() } }
+  );
+  res.status(200).send();
 });
 
 // Delete Posts
